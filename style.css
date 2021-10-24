@@ -1,0 +1,81 @@
+body {
+  font-family: monospace, monospace;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 50px auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form {
+  width: 80%;
+  margin: 20px auto;
+  text-transform: uppercase;
+}
+
+input {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.3;
+  margin: 0;
+}
+
+select {
+  font-size: 18px;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) {
+  background: #eee;
+}
+
+th {
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+td,
+th {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+}
+
+.fields {
+  padding: 0 auto;
+  float: left
+}
+
+.btn {
+
+
+  background-color: #3498db;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  min-height: 38px;
+  min-width: 100px;
+  cursor: pointer;
+  transition: all .3s;
+  text-transform: uppercase;
+}
+
+.btn-right {
+
+  float: right;
+}
+
+#btn-del {
+  background-color: red;
+  margin: 0 auto;
+}
