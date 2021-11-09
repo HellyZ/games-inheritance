@@ -18,7 +18,7 @@
           <legend>Add game</legend>
           <div class="fields">
             <input type="name" placeholder="Title" id="gameTitle">
-            
+
             <label for="state">Mode</label>
             <select id="gameMode">
               <option value=""></option>
@@ -26,7 +26,7 @@
               <option value="multi">Multi-player</option>
             </select>
             <label for="state">Type</label>
-            <select id="type" id="gameType">
+            <select id="gameType">
               <option value=""></option>
             </select>
             <input type="sales" placeholder="Sales" id="gameSales">
@@ -45,17 +45,19 @@
           <th>Mode</th>
           <th>Type</th>
           <th>Representatives</th>
+          <th>Sales</th>
           <th></th>
         </tr>
       </thead>
       <tbody class="table-content">
         <tr>
-          <td data-column="Number">James</td>
-          <td data-column="Name">Matman</td>
-          <td data-column="Mode">Chief Sandwich Eater</td>
-          <td data-column="Type">@james</td>
-          <td data-column="Representatives">@james</td>
-          <td data-column="Representatives">
+          <td data-column="Number">Number</td>
+          <td data-column="Name">Name</td>
+          <td data-column="Mode">Mode</td>
+          <td data-column="Type">Type</td>
+          <td data-column="Representatives">Representatives</td>
+          <td data-column="Sales">2500000</td>
+          <td data-column="Delete">
             <button id="btn-del" class="btn">Delete</button>
           </td>
         </tr>

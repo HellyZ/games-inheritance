@@ -54,6 +54,17 @@ const representativesValues = {
 console.log(titles);
 console.log("Hello");
 
+function initGameTypes() {
+  let selectContainer = document.getElementById("gameType");
+
+  for (const element of Object.entries(typeValues)) {
+    let opt = document.createElement("option");
+    opt.value = element[0];
+    opt.text = element[1];
+    selectContainer.add(opt);
+  }
+}
+
 /*
 название, описание, вид, возраст, класс, размер соцветия, класс опасности, ареал произрастания, область применения (в пищевой промышленности, в получении лекарственных препаратов, в сельском хозяйстве...), первооткрыватель, место произрастания и т.д.
 
@@ -64,17 +75,18 @@ class VideoGame {
     this.mode = mode; //string - select (options) :SPV or MPV (мультиплеер или одиночная)
     this.type = type; //select (options):  (жанр)
     this.representatives = representatives; // array (примеры игр)
-    this.sales = sales; //number
+    this.sales = sales || 1000000; //number
   }
 
-  createVideoGame(game) {
-    let gameTitle = document.querySelector("#gameTitle");
-    let gameMode = document.querySelector("#gameMode");
-    let gameType = document.querySelector("#gameType");
-    let gameSales = document.querySelector("#gameSales");
-
-    let newGame = VideoGame(gameTitle, gameType);
-  }
+  // createVideoGame(gameTitle, gameType, representativesValues, gameSales, gameMode) {
+  //   // let gameTitle = document.querySelector("#gameTitle");
+  //   // let gameMode = document.querySelector("#gameMode");
+  //   // let gameType = document.querySelector("#gameType");
+  //   // let gameSales = document.querySelector("#gameSales");
+  //   let newGame = VideoGame(gameTitle, gameType, representativesValues[gameType], gameSales, gameMode);
+  //   console.log(newGame)
+  //   // this.renderRow(newGame)
+  // }
 
   renderRow(game) {
     let tr = tableContent.createElement(tr);
@@ -84,6 +96,7 @@ class VideoGame {
     });
     let delBtn = tr.createElement(td);
     delBtn.innerHTML = `<button id="btn-del" class="btn">Delete</button>`;
+    this.tableContent.append(tr);
 
     //   return `
     //   <tr class="table-content">
@@ -97,22 +110,77 @@ class VideoGame {
     // </tr>
     //   `;
   }
+
+  save() {
+    let storedGames = JSON.parse(localStorage.getItem("games")) || [];
+    storedGames.push(this);
+    localStorage.setItem("games", JSON.stringify(storedGames));
+  }
 }
 
 class SinglePlayer extends VideoGame {
-  constructor(name, type, representatives, sales, mode, mods) {
-    super(name, type, representatives, sales, mode);
-    this.mods = mods; //true
+  constructor(...args) {
+    super(...args);
+    this.isModsAllowed = true; //true
   }
-
-  createSPG() {}
 }
 
 class MultiPlayer extends VideoGame {
-  constructor(name, type, representatives, sales, mode, multiType, gameRealms) {
-    super(name, type, representatives, sales, mode);
+  constructor(
+    title,
+    type,
+    representatives,
+    sales,
+    mode,
+    multiType,
+    gameRealms
+  ) {
+    super(title, type, representatives, sales, mode);
     this.multiType = multiType;
-    this.gameRealms = gameRealms; //миры и серверы, локации
+    this.gameRealms = gameRealms || 1; //миры и серверы, локации
   }
-  createMPG() {}
 }
+
+initGameTypes();
+
+saveBtn.addEventListener("click", (e) => {
+  let gameTitle = document.querySelector("#gameTitle").value;
+  let gameMode = document.querySelector("#gameMode").value;
+  let gameType = document.querySelector("#gameType").value;
+  let gameSales = Number(document.querySelector("#gameSales").value);
+  console.log(gameType);
+  const createNewGame = (gameTitle, gameMode, gameType, gameSales) => {
+    switch (gameMode) {
+      case "single":
+        return new SinglePlayer(
+          gameTitle,
+          gameType,
+          representativesValues[gameType],
+          gameSales,
+          gameMode
+        );
+      case "multi":
+        return new MultiPlayer(
+          gameTitle,
+          gameType,
+          representativesValues[gameType],
+          gameSales,
+          gameMode,
+          ["Real-time SHIT", "Simulations"],
+          1
+        );
+      default:
+        throw Error("Shit happens!");
+    }
+  };
+
+  let newGame = createNewGame(gameTitle, gameMode, gameType, gameSales);
+  console.log(newGame);
+  newGame.save();
+});
+// let g = new VideoGame("BAR", "mp", representativesValues.action, 1000, "MP");
+// let g1 = new VideoGame("FOO", "mp", representativesValues.action, 1000, "MP");
+
+// console.log(g);
+// g.save();
+// g1.save();
